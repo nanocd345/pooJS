@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini juego</title>
+</head>
+<body>
+    <button onclick="moverse()">Moverse</button>
+    <button onclick="investigar()">Investigar</button>
+    <button onclick="atacar()">Atacar</button>
+    <button onclick="descansar()">Descansar</button>
+    <button onclick="verInventario()">Ver Inventario</button>
+    <button onclick="utilizarItem('Pocion de Vida')">Usar pocion</button>
+    <button onclick="reiniciar()">Reiniciar Juego</button>
+
+    <script type="module">
+        import { Juego } from './js/juego.js';
+        import { Heroe } from './js/heroe.js';
+        import { Inventario } from './js/inventario.js';
+        import { Combate } from './js/combate.js';
+        import { Area } from './js/area.js';
+
+        let juego = new Juego();
+        let heroe = new Heroe();
+        let inventario = new Inventario();
+
+        window.moverse = function() {
+            juego.ejecutar('moverse');
+        }
+
+        window.investigar = function() {
+            const monstruo = juego.ejecutar('investigar');
+            if (monstruo) {
+                console.log(`¡Un ${monstruo.constructor.name} ha aparecido!`);
+            }
+        }
+
+        window.atacar = function() {
+            const mostruo = juego.areaActual.mostruo;
+            if (mostruo) {
+                juego.atacar();
+            } else {
+                console.log("No hay mostruos para atacar.");
+            }
+        }
+
+        window.descansar = function() {
+            juego.ejecutar('descansar');
+        }
+
+        window.verInventario = function() {
+            juego.ejecutar('verInventario');
+        }
+        window.utilizarItem = function(itemNombre) {
+            juego.ejecutar('utilizarItem', itemNombre);
+        }
+
+        window.reiniciar = function() {
+            juego.ejecutar('reiniciar');
+        }
+    </script>
+</body>
+</html>
